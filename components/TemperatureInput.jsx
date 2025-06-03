@@ -1,7 +1,6 @@
 // temp-converter-pages/components/TemperatureInput.jsx
 // Reusable component for a single temperature input field.
 "use client"; // Required as it handles user interaction (onChange).
-import '../styles/globals.css';
 import React from 'react';
 
 // Renders a label and an input field with shared styling.

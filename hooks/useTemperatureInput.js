@@ -1,5 +1,4 @@
 "use client"; // Required for using useState in Next.js client components
-import '../styles/globals.css';
 import { useState } from 'react';
 import { celsiusToFahrenheit, fahrenheitToCelsius } from '../utils/conversions';
 

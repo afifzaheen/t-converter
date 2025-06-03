@@ -1,6 +1,5 @@
 // temp-converter-pages/components/TemperatureConverter.jsx
 "use client"; 
-import '../styles/globals.css';
 import React from 'react';
 import useTemperatureInput from '../hooks/useTemperatureInput';
 import TemperatureInput from './TemperatureInput';
