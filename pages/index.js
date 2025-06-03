@@ -1,6 +1,6 @@
 // temp-converter-pages/pages/index.js
 // The root page of the application ('/').
-import '../styles/globals.css';
+
 import TemperatureConverter from '../components/TemperatureConverter';
 
 // Renders the main TemperatureConverter component within a centered layout.
