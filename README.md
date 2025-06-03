@@ -8,7 +8,7 @@ View the website here: https://t-converter.vercel.app/
 
 ## 🛠️ Tech Stack
 
-- **Next.js 
+- Next.js 
 - **React Hooks**
 - **Tailwind CSS**
 
