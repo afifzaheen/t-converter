@@ -1,5 +1,4 @@
-// temp-converter-pages/components/TemperatureConverter.jsx
-"use client"; 
+"use client";
 import React from 'react';
 import useTemperatureInput from '../hooks/useTemperatureInput';
 import TemperatureInput from './TemperatureInput';
@@ -8,23 +7,22 @@ const TemperatureConverter = () => {
   const {
     celsius,
     fahrenheit,
-    handleCelsiusChange,
-    handleFahrenheitChange,
-  } = useTemperatureInput();
+    handleChange,  // This is the unified change handler
+  } = useTemperatureInput();  // Custom hook to manage temperature states
 
-  // Config array for .map() 
+  // Configuration array to avoid repetitive code in rendering inputs
   const inputFields = [
     {
       id: "celsius",
       label: "Celsius (°C)",
       value: celsius,
-      onChange: handleCelsiusChange,
+      onChange: handleChange('celsius'),  // Pass 'celsius' as the type to handleChange
     },
     {
       id: "fahrenheit",
       label: "Fahrenheit (°F)",
       value: fahrenheit,
-      onChange: handleFahrenheitChange,
+      onChange: handleChange('fahrenheit'),  // Pass 'fahrenheit' as the type to handleChange
     },
   ];
 
@@ -34,14 +32,14 @@ const TemperatureConverter = () => {
         Temperature Converter
       </h1>
 
-      {/* DRY  */}
+      {/* Use .map to dynamically render input fields from inputFields configuration */}
       {inputFields.map(({ id, label, value, onChange }) => (
         <TemperatureInput
           key={id}
           id={id}
           label={label}
           value={value}
-          onChange={onChange}
+          onChange={onChange}  // Dynamically pass the onChange handler for each input field
         />
       ))}
     </div>

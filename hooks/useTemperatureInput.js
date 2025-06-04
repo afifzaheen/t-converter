@@ -1,48 +1,56 @@
-"use client"; // Required for using useState in Next.js client components
+"use client";
 import { useState } from 'react';
 import { celsiusToFahrenheit, fahrenheitToCelsius } from '../utils/conversions';
 
-// Custom React hook to manage temperature input and interconversion logic
+/**
+ * Custom hook to manage temperature conversion between Celsius and Fahrenheit.
+ *
+ * @returns {Object} - The hook returns the current celsius and fahrenheit values
+ *                     and their respective change handlers.
+ * @param {string} initialValue - The initial value for both celsius and fahrenheit (optional, defaults to '')
+ * 
+ * @example
+ * const { celsius, fahrenheit, handleChange } = useTemperatureInput();
+ */
 const useTemperatureInput = (initialValue = '') => {
-  // Default parameter used here: if no initialValue is passed, default to an empty string
-  const [celsius, setCelsius] = useState(initialValue);
-  const [fahrenheit, setFahrenheit] = useState(initialValue);
+  // State for storing both Celsius and Fahrenheit values
+  const [temperature, setTemperature] = useState({
+    celsius: initialValue,
+    fahrenheit: initialValue,
+  });
 
-  // Helper to check if input is a valid number
+  // Helper function to check if a value is numeric
   const isNumeric = (val) => !isNaN(parseFloat(val)) && isFinite(val);
 
   /**
-   * Factory function to generate input change handlers
-   * @param {'celsius' | 'fahrenheit'} type - Which temperature scale is being edited
-   * @returns {Function} - An input event handler
+   * Unified handler function for both Celsius and Fahrenheit inputs.
+   *
+   * @param {'celsius' | 'fahrenheit'} type - The temperature scale type being edited.
+   * @returns {Function} - Returns the event handler function for a specific input.
    */
-  const createChangeHandler = (type) =>
-    // Default parameter used here: if the function is called without an event object,
-    // it will default to an object with target.value as an empty string
-    (e = { target: { value: '' } }) => {
-      const value = e.target.value ?? ''; // Safely extract value
+  const handleChange = (type) => (e) => {
+    const value = e.target.value;
 
-      if (type === 'celsius') {
-        setCelsius(value);
-        setFahrenheit(
-          isNumeric(value) ? celsiusToFahrenheit(value).toFixed(2) : ''
-        );
-      } else {
-        setFahrenheit(value);
-        setCelsius(
-          isNumeric(value) ? fahrenheitToCelsius(value).toFixed(2) : ''
-        );
-      }
-    };
+    // Based on type ('celsius' or 'fahrenheit'), update the corresponding state values
+    if (type === 'celsius') {
+      setTemperature({
+        celsius: value,
+        fahrenheit: isNumeric(value) ? celsiusToFahrenheit(value).toFixed(2) : '',
+      });
+    } else {
+      setTemperature({
+        fahrenheit: value,
+        celsius: isNumeric(value) ? fahrenheitToCelsius(value).toFixed(2) : '',
+      });
+    }
+  };
 
-  // Generated handlers for each input type
-  const handleCelsiusChange = createChangeHandler('celsius');
-  const handleFahrenheitChange = createChangeHandler('fahrenheit');
-
-  // Return state and handlers so they can be used in a component
-  return { celsius, fahrenheit, handleCelsiusChange, handleFahrenheitChange };
+  // Return temperature values and handlers for use in components
+  return {
+    celsius: temperature.celsius,
+    fahrenheit: temperature.fahrenheit,
+    handleChange,  // Return the unified handleChange function
+  };
 };
 
 export default useTemperatureInput;
-// This custom hook encapsulates the logic for temperature conversion and input management,
-// allowing components to focus on rendering and user interaction.
