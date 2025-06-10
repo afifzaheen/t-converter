@@ -6,9 +6,9 @@ import { celsiusToFahrenheit, fahrenheitToCelsius } from '../utils/conversions';
  * Custom hook to manage temperature conversion between Celsius and Fahrenheit.
  *
  * @returns {Object} - The hook returns the current celsius and fahrenheit values
- *                     and their respective change handlers.
+ * and their respective change handlers.
  * @param {string} initialValue - The initial value for both celsius and fahrenheit (optional, defaults to '')
- * 
+ *
  * @example
  * const { celsius, fahrenheit, handleChange } = useTemperatureInput();
  */
@@ -25,19 +25,18 @@ const useTemperatureInput = (initialValue = '') => {
   /**
    * Unified handler function for both Celsius and Fahrenheit inputs.
    *
-   * @param {'celsius' | 'fahrenheit'} type - The temperature scale type being edited.
-   * @returns {Function} - Returns the event handler function for a specific input.
+   * @param {Object} e - The event object from the input.
+   * @param {number} index - 0 for celsius, 1 for fahrenheit (instead of 'celsius' or 'fahrenheit')
    */
-  const handleChange = (type) => (e) => {
+  const handleChange = (e, index) => {
     const value = e.target.value;
 
-    // Based on type ('celsius' or 'fahrenheit'), update the corresponding state values
-    if (type === 'celsius') {
+    if (index === 0) {  // 0 for celsius
       setTemperature({
         celsius: value,
         fahrenheit: isNumeric(value) ? celsiusToFahrenheit(value).toFixed(2) : '',
       });
-    } else {
+    } else {  // 1 for fahrenheit
       setTemperature({
         fahrenheit: value,
         celsius: isNumeric(value) ? fahrenheitToCelsius(value).toFixed(2) : '',

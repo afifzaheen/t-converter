@@ -16,13 +16,13 @@ const TemperatureConverter = () => {
       id: "celsius",
       label: "Celsius (°C)",
       value: celsius,
-      onChange: handleChange('celsius'),  // Pass 'celsius' as the type to handleChange
+      onChange: (e) => handleChange(e, 0),  // 0 for Celsius
     },
     {
       id: "fahrenheit",
       label: "Fahrenheit (°F)",
       value: fahrenheit,
-      onChange: handleChange('fahrenheit'),  // Pass 'fahrenheit' as the type to handleChange
+      onChange: (e) => handleChange(e, 1),  // 1 for Fahrenheit
     },
   ];
 
@@ -47,4 +47,3 @@ const TemperatureConverter = () => {
 };
 
 export default TemperatureConverter;
-
